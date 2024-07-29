@@ -49,6 +49,24 @@ public class Main {
         customerRepository.deleteById(id);
     }
 
+    @PutMapping("{customerId}")
+    public void updatingCustomer(@PathVariable("customerId") Integer id,
+                                @RequestBody NewCustomerRequest request) {
+
+        Customer existCustomer = customerRepository.findById(id).orElse(null);
+        if (Objects.nonNull(existCustomer)) {
+            existCustomer.setName(request.name());
+            existCustomer.setEmail(request.email());
+            existCustomer.setAge(request.age());
+            customerRepository.save(existCustomer);
+
+        }else {
+            System.out.println("Customer not found");
+        }
+
+
+    }
+
 //    @GetMapping("/greet")
 //    public GreetResponse great(){
 ////         GreetResponse  response= new GreetResponse(
